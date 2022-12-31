@@ -1,11 +1,14 @@
 import express from "express";
 import http from "http";
 import createGame from "./public/game.js";
-import socketio from "socket.io";
+import geckos from "@geckos.io/server";
 
 const app = express();
 const server = http.createServer(app);
-const sockets = socketio(server);
+
+const io = geckos();
+
+io.listen();
 
 app.use(express.static("public"));
 
@@ -14,12 +17,11 @@ game.start();
 
 game.subscribe((command) => {
   console.log(`> Emitting ${command.type}`);
-  sockets.emit(command.type, command);
+  io.emit(command.type, command);
 });
 
 io.onConnection((channel) => {
   console.log(`> Player connected: ${channel.id}`);
-  channel.join("game1");
 
   channel.onDisconnect(() => {
     game.removePlayer({ playerId: playerId });
@@ -45,6 +47,6 @@ io.onConnection((channel) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log(`> Server listening on port: 3000`);
+server.listen(4000, () => {
+  console.log(`> Server listening on port: 4000`);
 });

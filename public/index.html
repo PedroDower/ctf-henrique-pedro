@@ -14,12 +14,12 @@
         height: 400px;
       }
     </style>
+    <script src="/geckos.io/geckos.io-client.2.2.4.min.js"></script>
   </head>
   <body>
-    <canvas id="screen" width="10" height="20"></canvas>
+    <canvas id="screen" width="10" height="10"></canvas>
 
     <script type="module">
-      import geckos from "@geckos.io/client";
       import createGame from "./game.js";
       import createKeyboardListener from "./keyboard-listener.js";
       import renderScreen from "./render-screen.js";
@@ -27,19 +27,22 @@
       const game = createGame();
       const keyboardListener = createKeyboardListener(document);
 
-      const channel = geckos({ port: 4000 }); // default port is 9208
-
+      const channel = geckos(); // default port is 9208
+      console.log("connecting to the server");
       channel.onConnect((error) => {
+        console.log("Connected to the server!");
         if (error) {
           console.error(error.message);
           return;
         }
+        const playerId = channel.id;
+
         console.log(`Player connected on Client with id: ${playerId}`);
         const screen = document.getElementById("screen");
         renderScreen(screen, game, requestAnimationFrame, playerId);
-        const playerId = channel.id;
 
         channel.on("setup", (state) => {
+          console.log(`Receiving ${state.type} -> ${state.playerId}`);
           const playerId = channel.id;
           game.setState(state);
           keyboardListener.registerPlayerId(playerId);
