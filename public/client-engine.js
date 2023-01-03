@@ -1,44 +1,58 @@
-class ClientEngine {
-  sprites = [];
-  isOn = false;
-  frameRate = 20; // in miliseconds
-
-  constructor(canvasElement) {
-    const context = canvasElement.getContext("2d");
-    context.fillStyle = "white";
-    context.clearRect(0, 0, 10, 20);
-  }
-
-  start() {
-    this.isOn = true;
-
-    window.requestAnimationFrame(this.nextFrame);
-  }
-
-  stop() {
-    this.isOn = false;
-  }
-
-  nextFrame() {
-    if (!this.isOn && !this.isNewFrameTime()) {
-      return;
+  export default class ClientEngine {
+    
+    constructor(canvasElement) {
+      this.context = canvasElement.getContext("2d");
+      
+      this.sprites = [];
+      this.isOn = false;
+      this.frameRate = 1000 / 5; // in miliseconds
     }
 
-    this.clearScreen();
-    this.draw();
-  }
+    start() {
+      this.isOn = true;
+      this.nextFrame();
+    }
 
-  isNewFrameTime() {
-    const now = new Date().getTime();
+    stop() {
+      this.isOn = false;
+    }
 
-    if (!this.lastTime) this.lastTime = now;
+    nextFrame() {
+      if (!this.isOn) {
+        return;
+      }
 
-    return now - this.lastTime < this.frameRate;
-  }
+      if (this.isNewFrameTime()) {
+        this.clearScreen();
+        this.draw();
+      }
 
-  draw() {
-    for (let sprite of this.sprites) {
-      this.sprite.draw();
+      window.requestAnimationFrame(() => {
+        this.nextFrame();
+      });
+    }
+
+    isNewFrameTime() {
+      const now = new Date().getTime();
+
+      if (!this.lastTime) this.lastTime = now;
+
+      if (now - this.lastTime >= this.frameRate) {
+        this.lastTime = now;
+        return true;
+      }
+
+      return false;
+    }
+
+    clearScreen() {
+      this.context.fillStyle = "white";
+      this.context.clearRect(0, 0, 10, 20);
+    }
+
+    draw() {
+      for (let sprite of this.sprites) {
+        this.sprite.draw();
+      }
     }
   }
-}
