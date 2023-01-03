@@ -13,19 +13,12 @@ io.listen();
 app.use(express.static("public"));
 
 const game = createGame();
-game.start();
-
-game.subscribe((command) => {
-  console.log(`> Emitting ${command.type}`);
-  io.emit(command.type, command);
-});
 
 io.onConnection((channel) => {
   console.log(`> Player connected: ${channel.id}`);
 
   channel.onDisconnect(() => {
-    game.removePlayer({ playerId: playerId });
-
+    game.removePlayer({ playerId: channel.id });
     console.log(`${channel.id} got disconnected`);
   });
 
@@ -36,7 +29,6 @@ io.onConnection((channel) => {
   channel.on("move-player", (command) => {
     command.playerId = playerId;
     command.type = "move-player";
-
     game.movePlayer(command);
   });
 
