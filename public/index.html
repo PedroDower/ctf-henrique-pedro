@@ -20,11 +20,9 @@
     <canvas id="screen" width="10" height="10"></canvas>
 
     <script type="module">
-      import createGame from "./game.js";
       import createKeyboardListener from "./keyboard-listener.js";
       import renderScreen from "./render-screen.js";
 
-      const game = createGame();
       const keyboardListener = createKeyboardListener(document);
 
       const channel = geckos(); // default port is 9208
@@ -44,9 +42,8 @@
         channel.on("setup", (state) => {
           console.log(`Receiving ${state.type} -> ${state.playerId}`);
           const playerId = channel.id;
-          game.setState(state);
           keyboardListener.registerPlayerId(playerId);
-          keyboardListener.subscribe(game.movePlayer);
+
           keyboardListener.subscribe((command) => {
             channel.emit("move-player", command);
           });

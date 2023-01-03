@@ -7,10 +7,6 @@ export default function createGame() {
     },
   };
 
-  function setState(newState) {
-    Object.assign(state, newState);
-  }
-
   function addPlayer(command) {
     const playerId = command.playerId;
     const playerX =
@@ -76,6 +72,5 @@ export default function createGame() {
     removePlayer,
     movePlayer,
     state,
-    setState,
   };
 }
