@@ -21,7 +21,6 @@
 
     <script type="module">
       import createKeyboardListener from "./keyboard-listener.js";
-      import renderScreen from "./render-screen.js";
 
       const keyboardListener = createKeyboardListener(document);
 
@@ -37,7 +36,6 @@
 
         console.log(`Player connected on Client with id: ${playerId}`);
         const screen = document.getElementById("screen");
-        renderScreen(screen, game, requestAnimationFrame, playerId);
 
         channel.on("setup", (state) => {
           console.log(`Receiving ${state.type} -> ${state.playerId}`);
@@ -48,6 +46,10 @@
             channel.emit("move-player", command);
           });
         });
+        channel.on("state", (state) => {
+          console.table(state);
+        });
+
         channel.on("add-player", (command) => {
           console.log(`Receiving ${command.type} -> ${command.playerId}`);
           game.addPlayer(command);

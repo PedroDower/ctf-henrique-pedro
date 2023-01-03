@@ -2,6 +2,7 @@ import express from "express";
 import http from "http";
 import createGame from "./public/game.js";
 import geckos from "@geckos.io/server";
+import stateEmitter from "./public/stateEmitter.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -15,8 +16,9 @@ app.use(express.static("public"));
 const game = createGame();
 
 io.onConnection((channel) => {
+  stateEmitter(game, io, "room1");
   console.log(`> Player connected: ${channel.id}`);
-
+  channel.join("room1");
   channel.onDisconnect(() => {
     game.removePlayer({ playerId: channel.id });
     console.log(`${channel.id} got disconnected`);

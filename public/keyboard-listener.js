@@ -20,7 +20,6 @@ export default function createKeyboardListener(document) {
   }
 
   return {
-    subscribe,
     registerPlayerId,
   };
 }
