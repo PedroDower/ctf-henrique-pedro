@@ -20,9 +20,15 @@
     <canvas id="screen" width="10" height="10"></canvas>
 
     <script type="module">
-      import createKeyboardListener from "./keyboard-listener.js";
+      import ClientEngine from "./client-engine.js";
+      import KeyboardListener from "./keyboard-listener.js";
 
-      const keyboardListener = createKeyboardListener(document);
+      const screen = document.getElementById('screen');
+      const engine = new ClientEngine(screen);
+
+      engine.start();
+
+      const keyboardListener = new KeyboardListener(document, 123);
 
       const channel = geckos(); // default port is 9208
       console.log("connecting to the server");
@@ -32,42 +38,28 @@
           console.error(error.message);
           return;
         }
+
         const playerId = channel.id;
 
         console.log(`Player connected on Client with id: ${playerId}`);
-        const screen = document.getElementById("screen");
 
-        channel.on("setup", (state) => {
-          console.log(`Receiving ${state.type} -> ${state.playerId}`);
-          const playerId = channel.id;
-          keyboardListener.registerPlayerId(playerId);
-
-          keyboardListener.subscribe((command) => {
-            channel.emit("move-player", command);
-          });
-        });
         channel.on("state", (state) => {
-          console.table(state);
-        });
-
-        channel.on("add-player", (command) => {
-          console.log(`Receiving ${command.type} -> ${command.playerId}`);
-          game.addPlayer(command);
-        });
-        channel.on("remove-player", (command) => {
-          console.log(`Receiving ${command.type} -> ${command.playerId}`);
-          game.removePlayer(command);
-        });
-        channel.on("move-player", (command) => {
-          console.log(`Receiving ${command.type} -> ${command.playerId}`);
-
-          const playerId = channel.id;
-
-          if (playerId !== command.playerId) {
-            game.movePlayer(command);
-          }
+          engine.sprites = convertStateToSprites(state);
         });
       });
+
+      function convertStateToSprites(state) {
+        const players = Object.values(state.state.players);
+
+        return players.map(player => {
+          player.draw = function(context) {
+            context.fillStyle = '#' + player.color;
+            context.fillRect(player.x, player.y, 1, 1);
+          }
+
+          return player;
+        });
+      }
     </script>
   </body>
 </html>

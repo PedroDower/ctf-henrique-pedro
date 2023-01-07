@@ -53,7 +53,7 @@ export default class ClientEngine {
     this.clearScreen();
 
     for (let sprite of this.sprites) {
-      this.sprite.draw();
+      sprite.draw(this.context);
     }
   }
 }
