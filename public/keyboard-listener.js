@@ -1,24 +1,60 @@
+const KEYS = {
+  ARROW_UP: 'ArrowUp',
+  ARROW_RIGHT: 'ArrowRight',
+  ARROW_DOWN: 'ArrowDown',
+  ARROW_LEFT: 'ArrowLeft'
+};
+
+const COMMANDS = {
+  MOVE_UP: 'ArrowUp',
+  MOVE_RIGHT: 'ArrowRight',
+  MOVE_DOWN: 'ArrowDown',
+  MOVE_LEFT: 'ArrowLeft'
+};
+
 export default class KeyboardListener {
   keysCallback = new Map();
   keysPressed = new Map();
-  playerId;
+  onCommand;
 
-  constructor(document, playerId) {
+  constructor(document) {
     document.addEventListener("keydown", e => this.handleKeydown(e));
     document.addEventListener("keyup", e => this.handleKeyup(e));
-
-    this.playerId = playerId;
   }
 
   handleKeydown(event) {
     const keyPressed = event.key;
 
     this.keysPressed.set(keyPressed, true);
+    this.generateComands();
   }
 
   handleKeyup(event) {
     const keyPressed = event.key;
 
     this.keysPressed.set(keyPressed, false);
+    this.generateComands();
+  }
+
+  generateComands() {
+    const commandKeyMap = {
+      [KEYS.ARROW_UP]: COMMANDS.MOVE_UP,
+      [KEYS.ARROW_RIGHT]: COMMANDS.MOVE_RIGHT,
+      [KEYS.ARROW_DOWN]: COMMANDS.MOVE_DOWN,
+      [KEYS.ARROW_LEFT]: COMMANDS.MOVE_LEFT
+    };
+    let command;
+
+    this.keysPressed.forEach((pressed, key) => {
+      if (!pressed) return;
+
+      command = commandKeyMap[key];
+    });
+
+    this.emitCommand(command);
+  }
+
+  emitCommand(command) {
+    this.onCommand(command);
   }
 }

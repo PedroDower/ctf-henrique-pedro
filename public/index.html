@@ -28,8 +28,6 @@
 
       engine.start();
 
-      const keyboardListener = new KeyboardListener(document, 123);
-
       const channel = geckos(); // default port is 9208
       console.log("connecting to the server");
       channel.onConnect((error) => {
@@ -47,6 +45,20 @@
           engine.sprites = convertStateToSprites(state);
         });
       });
+
+      const keyboardListener = new KeyboardListener(document);
+      keyboardListener.onCommand = command => {
+        console.log(command);
+        channel.emit(
+          "move-player",
+          { keyPressed: command },
+          {
+            reliable: true,
+            interval: 50,
+            runs: 5
+          }
+        );
+      };
 
       function convertStateToSprites(state) {
         const players = Object.values(state.state.players);
