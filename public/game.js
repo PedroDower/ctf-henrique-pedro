@@ -22,6 +22,7 @@ export default function createGame() {
       playerId: command.playerId, // id do jogador
       x: playerX,
       y: playerY,
+      moveCommand: `Idle`,
       rotation: 0,
       color: "0000FF",
     };
@@ -90,6 +91,9 @@ export default function createGame() {
         } if(player.x + 1 < state.screen.width) {
           player.x = player.x + 1;
         }
+      },
+      Idle(player) {
+        return;
       }
     };
 

@@ -1,10 +1,14 @@
 const stateEmitter = (state, io, roomId) => {
   const isOn = true;
-  const frameRate = 10;
+  const frameRate = 20;
   const frameRateInMs = 1000 / frameRate;
   const nextFrame = () => {
-    // creates a setInterval to send the state to the client every 20ms
     const sendInterval = setInterval(() => {
+      if(player.moveCommand) {
+        if(player.moveCommand !== "Idle") {
+          movePlayer(moveCommand);
+        }
+      }
       console.log("sending state to client");
       io.room(roomId).emit("state", state);
     }, frameRateInMs);
