@@ -36,25 +36,61 @@ export default function createGame() {
   function movePlayer(command) {
     const acceptedMoves = {
       ArrowUp(player) {
+        player.rotation = 0;
         if (player.y - 1 >= 0) {
           player.y = player.y - 1;
         }
       },
       ArrowRight(player) {
+        player.rotation = 90;
         if (player.x + 1 < state.screen.width) {
           player.x = player.x + 1;
         }
       },
       ArrowDown(player) {
+        player.rotation = 180;
         if (player.y + 1 < state.screen.height) {
           player.y = player.y + 1;
         }
       },
       ArrowLeft(player) {
+        player.rotation = 270;
         if (player.x - 1 >= 0) {
           player.x = player.x - 1;
         }
       },
+      ArrowUpLeft(player) {
+        player.rotation = 315;
+        if (player.y - 1 >= 0){
+          player.y = player.y - 1;
+        } if(player.x - 1 >= 0) {
+          player.x = player.x - 1;
+        }
+      },
+      ArrowUpRight(player) {
+        player.rotation = 45;
+        if (player.y - 1 >= 0){
+          player.y = player.y - 1;
+        } if(player.x + 1 < state.screen.width) {
+          player.x = player.x + 1;
+        }
+      },
+      ArrowDownLeft(player) {
+        player.rotation = 225;
+        if (player.y + 1 < state.screen.height){
+          player.y = player.y + 1;
+        } if(player.x - 1 >= 0) {
+          player.x = player.x - 1;
+        }
+      },
+      ArrowDownRight(player) {
+        player.rotation = 135;
+        if (player.y + 1 < state.screen.height){
+          player.y = player.y + 1;
+        } if(player.x + 1 < state.screen.width) {
+          player.x = player.x + 1;
+        }
+      }
     };
 
     const keyPressed = command.keyPressed;
