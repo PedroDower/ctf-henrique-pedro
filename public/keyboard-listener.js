@@ -25,12 +25,20 @@ export default class KeyboardListener {
   handleKeydown(event) {
     const keyPressed = event.key;
 
+    if (this.keysPressed.get(keyPressed) === true) {
+      return;
+    }
+
     this.keysPressed.set(keyPressed, true);
     this.generateComands();
   }
 
   handleKeyup(event) {
     const keyPressed = event.key;
+
+    if (this.keysPressed.get(keyPressed) === false) {
+      return;
+    }
 
     this.keysPressed.set(keyPressed, false);
     this.generateComands();
