@@ -9,7 +9,12 @@ const COMMANDS = {
   MOVE_UP: 'ArrowUp',
   MOVE_RIGHT: 'ArrowRight',
   MOVE_DOWN: 'ArrowDown',
-  MOVE_LEFT: 'ArrowLeft'
+  MOVE_LEFT: 'ArrowLeft',
+  MOVE_UP_LEFT: 'ArrowUpLeft',
+  MOVE_UP_RIGHT: 'ArrowUpRight',
+  MOVE_DOWN_LEFT: 'ArrowDownLeft',
+  MOVE_DOWN_RIGHT: 'ArrowDownRight',
+  IDLE: 'Idle'
 };
 
 export default class KeyboardListener {
@@ -45,19 +50,23 @@ export default class KeyboardListener {
   }
 
   generateComands() {
-    const commandKeyMap = {
+    const movementKeyMap = {
       [KEYS.ARROW_UP]: COMMANDS.MOVE_UP,
       [KEYS.ARROW_RIGHT]: COMMANDS.MOVE_RIGHT,
       [KEYS.ARROW_DOWN]: COMMANDS.MOVE_DOWN,
       [KEYS.ARROW_LEFT]: COMMANDS.MOVE_LEFT
     };
-    let command;
+    let command = undefined;
 
     this.keysPressed.forEach((pressed, key) => {
       if (!pressed) return;
 
-      command = commandKeyMap[key];
+      command = movementKeyMap[key];
     });
+
+    if (command === undefined) {
+      command = COMMANDS.IDLE;
+    }
 
     this.emitCommand(command);
   }
