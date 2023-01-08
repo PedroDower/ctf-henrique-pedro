@@ -22,9 +22,9 @@ export default class ClientEngine {
       return;
     }
 
-    if (this.isNewFrameTime()) {
-      this.drawNewFrame();
-    }
+    // if (this.isNewFrameTime()) {
+      this.drawNewFrame(); 
+    // }
 
     window.requestAnimationFrame(() => {
       this.nextFrame();
