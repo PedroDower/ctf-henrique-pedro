@@ -31,7 +31,7 @@ io.onConnection((channel) => {
   channel.on("move-player", (command) => {
     command.playerId = playerId;
     command.type = "move-player";
-    game.movePlayer(command);
+    game.state.players[playerId].moveCommand = command.keyPressed;
   });
 
   channel.on("chat message", (data) => {
