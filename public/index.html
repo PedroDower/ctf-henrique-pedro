@@ -14,16 +14,19 @@
         height: 400px;
       }
     </style>
+    <script type="module" src="./gameEngine.mjs"></script>
+    <script src="/littlejs/littlejs.js"></script>
+
     <script src="/geckos.io/geckos.io-client.2.2.4.min.js"></script>
   </head>
   <body>
     <canvas id="screen" width="10" height="10"></canvas>
 
-    <script type="module">
+    <!-- <script type="module">
       import ClientEngine from "./client-engine.js";
       import KeyboardListener from "./keyboard-listener.js";
 
-      const screen = document.getElementById('screen');
+      const screen = document.getElementById("screen");
       const engine = new ClientEngine(screen);
 
       engine.start();
@@ -47,7 +50,7 @@
       });
 
       const keyboardListener = new KeyboardListener(document);
-      keyboardListener.onCommand = command => {
+      keyboardListener.onCommand = (command) => {
         console.log(command);
         channel.emit(
           "move-player",
@@ -55,7 +58,7 @@
           {
             reliable: true,
             interval: 50,
-            runs: 5
+            runs: 5,
           }
         );
       };
@@ -63,15 +66,15 @@
       function convertStateToSprites(state) {
         const players = Object.values(state.state.players);
 
-        return players.map(player => {
-          player.draw = function(context) {
-            context.fillStyle = '#' + player.color;
+        return players.map((player) => {
+          player.draw = function (context) {
+            context.fillStyle = "#" + player.color;
             context.fillRect(player.x, player.y, 1, 1);
-          }
+          };
 
           return player;
         });
       }
-    </script>
+    </script> -->
   </body>
 </html>

@@ -62,39 +62,43 @@ export default function createGame() {
       },
       ArrowUpLeft(player) {
         player.rotation = 315;
-        if (player.y - 1 >= 0){
+        if (player.y - 1 >= 0) {
           player.y = player.y - 1;
-        } if(player.x - 1 >= 0) {
+        }
+        if (player.x - 1 >= 0) {
           player.x = player.x - 1;
         }
       },
       ArrowUpRight(player) {
         player.rotation = 45;
-        if (player.y - 1 >= 0){
+        if (player.y - 1 >= 0) {
           player.y = player.y - 1;
-        } if(player.x + 1 < state.screen.width) {
+        }
+        if (player.x + 1 < state.screen.width) {
           player.x = player.x + 1;
         }
       },
       ArrowDownLeft(player) {
         player.rotation = 225;
-        if (player.y + 1 < state.screen.height){
+        if (player.y + 1 < state.screen.height) {
           player.y = player.y + 1;
-        } if(player.x - 1 >= 0) {
+        }
+        if (player.x - 1 >= 0) {
           player.x = player.x - 1;
         }
       },
       ArrowDownRight(player) {
         player.rotation = 135;
-        if (player.y + 1 < state.screen.height){
+        if (player.y + 1 < state.screen.height) {
           player.y = player.y + 1;
-        } if(player.x + 1 < state.screen.width) {
+        }
+        if (player.x + 1 < state.screen.width) {
           player.x = player.x + 1;
         }
       },
       Idle(player) {
         return;
-      }
+      },
     };
 
     const keyPressed = command.keyPressed;

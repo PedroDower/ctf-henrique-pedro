@@ -1,20 +1,20 @@
 const KEYS = {
-  ARROW_UP: 'ArrowUp',
-  ARROW_RIGHT: 'ArrowRight',
-  ARROW_DOWN: 'ArrowDown',
-  ARROW_LEFT: 'ArrowLeft'
+  ARROW_UP: "ArrowUp",
+  ARROW_RIGHT: "ArrowRight",
+  ARROW_DOWN: "ArrowDown",
+  ARROW_LEFT: "ArrowLeft",
 };
 
 const COMMANDS = {
-  MOVE_UP: 'ArrowUp',
-  MOVE_RIGHT: 'ArrowRight',
-  MOVE_DOWN: 'ArrowDown',
-  MOVE_LEFT: 'ArrowLeft',
-  MOVE_UP_LEFT: 'ArrowUpLeft',
-  MOVE_UP_RIGHT: 'ArrowUpRight',
-  MOVE_DOWN_LEFT: 'ArrowDownLeft',
-  MOVE_DOWN_RIGHT: 'ArrowDownRight',
-  IDLE: 'Idle'
+  MOVE_UP: "ArrowUp",
+  MOVE_RIGHT: "ArrowRight",
+  MOVE_DOWN: "ArrowDown",
+  MOVE_LEFT: "ArrowLeft",
+  MOVE_UP_LEFT: "ArrowUpLeft",
+  MOVE_UP_RIGHT: "ArrowUpRight",
+  MOVE_DOWN_LEFT: "ArrowDownLeft",
+  MOVE_DOWN_RIGHT: "ArrowDownRight",
+  IDLE: "Idle",
 };
 
 export default class KeyboardListener {
@@ -23,8 +23,8 @@ export default class KeyboardListener {
   onCommand;
 
   constructor(document) {
-    document.addEventListener("keydown", e => this.handleKeydown(e));
-    document.addEventListener("keyup", e => this.handleKeyup(e));
+    // document.addEventListener("keydown", e => this.handleKeydown(e));
+    // document.addEventListener("keyup", e => this.handleKeyup(e));
   }
 
   handleKeydown(event) {
@@ -54,7 +54,7 @@ export default class KeyboardListener {
       [KEYS.ARROW_UP]: COMMANDS.MOVE_UP,
       [KEYS.ARROW_RIGHT]: COMMANDS.MOVE_RIGHT,
       [KEYS.ARROW_DOWN]: COMMANDS.MOVE_DOWN,
-      [KEYS.ARROW_LEFT]: COMMANDS.MOVE_LEFT
+      [KEYS.ARROW_LEFT]: COMMANDS.MOVE_LEFT,
     };
     let command = undefined;
 
